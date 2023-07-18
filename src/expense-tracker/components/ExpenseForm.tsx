@@ -2,7 +2,7 @@ import React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import categories from "../categories";
+import categories from "../categories/categories";
 
 interface Props {
   onSubmit: (data: ExpenseFormData) => void;
