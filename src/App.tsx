@@ -1,15 +1,33 @@
-import Alert from "./components/Alert";
-import ListGroup from "./components/ListGroup";
-import Button from "./components/Buttons";
-import Like from "./components/Like";
-import NavBar from "./components/NavBar";
-import { useState } from "react";
-import Cart from "./components/Cart";
-import ExpandableText from "./components/ExpandableText";
-import Form from "./components/Form";
+import { useEffect, useState } from "react";
+import { useRef } from "react";
+import ProductList from "./components/ProductList";
+import axios from "axios";
+// https://jsonplaceholder.typicode.com/users
 
+interface User {
+  id: number;
+  name: string;
+}
 function App() {
-  return <div></div>;
+  const [users, setUsers] = useState<User[]>([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    axios
+      .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
+      .then((res) => setUsers(res.data))
+      .catch((err) => setError(err.message));
+  }, []);
+  return (
+    <>
+      {error && <p className="text-danger">{error}</p>}
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </>
+  );
 }
 
 export default App;
